@@ -9,6 +9,24 @@ import pandas as pd
 import streamlit as st
 
 
+def bridge_streamlit_secrets() -> None:
+    """Copy Streamlit Cloud secrets into the environment.
+
+    Locally the app reads `.env`; on Streamlit Community Cloud configuration
+    arrives through `st.secrets`, so the two sources are unified here before any
+    component looks at `os.getenv`.
+    """
+    for name in ("GEMINI_API_KEY", "GEMINI_MODEL"):
+        if os.getenv(name):
+            continue
+        try:
+            value = st.secrets.get(name)  # type: ignore[union-attr]
+        except Exception:  # noqa: BLE001 - no secrets.toml is normal locally
+            value = None
+        if value:
+            os.environ[name] = str(value)
+
+
 def validate_api_key() -> bool:
     """Stop the app early if the key is missing, with instructions."""
     key = os.getenv("GEMINI_API_KEY", "").strip()

@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 from pdf_processor import PDFProcessor
 from summarizer import PDFSummarizer
 from utils import (
+    bridge_streamlit_secrets,
     create_summary_dataframe,
     estimate_processing_time,
     export_summary_to_text,
@@ -162,6 +163,8 @@ def main() -> None:
     st.markdown(
         "Upload a PDF and get a structured summary powered by **Google Gemini** via LangChain."
     )
+
+    bridge_streamlit_secrets()
 
     if not validate_api_key():
         st.stop()

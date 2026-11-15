@@ -71,6 +71,24 @@ python summarizer.py samples/sample.pdf --style detailed --analysis --quotes
 python pdf_processor.py samples/sample.pdf --max-tokens 2000   # chunk stats only
 ```
 
+## Deploy (Streamlit Community Cloud)
+
+1. Push this repository to GitHub (it must be public, or grant Streamlit access).
+2. Sign in at <https://share.streamlit.io> with GitHub and authorize Streamlit.
+3. **New app** → pick the repo → branch `main` → main file `app.py`.
+4. **Advanced settings → Secrets** and paste:
+
+   ```toml
+   GEMINI_API_KEY = "your_key_here"
+   GEMINI_MODEL = "gemini-3.1-flash-lite"
+   ```
+
+5. **Deploy.** The app reads `st.secrets` and copies the values into the
+   environment at startup (`bridge_streamlit_secrets` in `utils.py`), so no code
+   change is needed between local `.env` and cloud secrets.
+
+Never put the key in the repo, `.env.example`, or a committed `secrets.toml`.
+
 ## Tests
 
 ```powershell
