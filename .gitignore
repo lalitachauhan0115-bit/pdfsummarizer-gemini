@@ -1,0 +1,25 @@
+# Secrets — never commit
+.env
+.streamlit/secrets.toml
+
+# Virtual environment
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# Tooling caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Local artifacts
+out.json
+*.log
+.DS_Store
+Thumbs.db
